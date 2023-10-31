@@ -1,0 +1,69 @@
+import cumbre.*
+import paises.*
+import participantes.*
+import conocimientos.*
+
+describe "Test de la cumbre"{
+	const argentina = new Pais(paisesConConflictos = [])
+	const brasil = new Pais(paisesConConflictos = [])
+	const colombia = new Pais(paisesConConflictos = [])
+	const coreaDelSur = new Pais(paisesConConflictos = [])
+	const coreaDelNorte = new Pais(paisesConConflictos = [] )
+	
+	const juana = new Programador(pais = argentina, conocimientos = [programacionBasica,css,html],commitsRealizados = 600)
+	const lucia = new Programador(pais = brasil, conocimientos = [programacionBasica,basesDeDatos],commitsRealizados = 800)
+	const mariana = new Especialista(pais = argentina, conocimientos = [programacionBasica,instalacionLinux,objetos,disenioConObjetos],commitsRealizados = 200)
+	const susana = new Especialista(pais = colombia, conocimientos = [programacionBasica,objetos],commitsRealizados = 1500)
+
+    method inicialize(){
+		cumbre.agregarParticipante(juana)
+		cumbre.agregarParticipante(lucia)
+		cumbre.agregarParticipante(mariana)
+		cumbre.agregarParticipante(susana)
+		cumbre.agregarPaisAuspiciante(argentina)
+        cumbre.agregarPaisAuspiciante(colombia)
+		cumbre.agregarPaisAuspiciante(coreaDelNorte)
+    }
+
+	test "Los paises deben ser argentina, brasil y colombia"{
+		self.inicialize()
+		assert.equals(#{argentina,brasil,colombia},cumbre.paisesDeParticipantesConjunto())
+	}
+	
+	test "El pais con mas participantes debe ser argentina"{
+		self.inicialize()
+		assert.equals(argentina,cumbre.paisConMasParticipantes())
+	}
+	
+	test "La cumbre debe ser relevante"{
+		self.inicialize()
+		assert.notThat(cumbre.esRelevante())
+	}
+	
+	test "Corea del sur es conflictivo para la cumbre"{
+		self.inicialize()
+		cumbre.agregarPaisAuspiciante(coreaDelNorte)
+		coreaDelNorte.registrarConflicto(coreaDelSur)
+		coreaDelSur.registrarConflicto(coreaDelNorte)
+		
+		assert.that(cumbre.esConflictivoParaLaCumbre(coreaDelSur))
+	}
+    
+	/*
+	test "La participante extrajera debe ser lucia"{
+		assert.equals(#{lucia},cumbre.participantesExtranjeros())
+	}
+	
+	test "Juana debe poder ingresar a la cumbre"{
+		assert.that(cumbre.puedeIngresar(susana))
+	}
+	
+	test "Mariana no debe tener restringido el acceso"{
+		assert.that(cumbre.tieneRestringidoElAcceso(mariana))
+	}
+	
+	test "La cumbre debe ser segura"{
+		assert.that(cumbre.esSegura())
+	}*/
+	
+}

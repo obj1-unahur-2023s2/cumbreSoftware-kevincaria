@@ -1,0 +1,38 @@
+import cumbre.*
+import paises.*
+import participantes.*
+import conocimientos.*
+
+
+	
+
+describe "Test de participantes"{
+	const argentina = new Pais(conflictosConLosPaises = [])
+	const brasil = new Pais(conflictosConLosPaises = [])
+	const colombia = new Pais(conflictosConLosPaises = [])
+    
+	const juana = new Programador(pais = argentina, conocimientos = [programacionBasica,css,html],commitsRealizados = 600)
+	const lucia = new Programador(pais = brasil, conocimientos = [programacionBasica,basesDeDatos],commitsRealizados = 800)
+	const mariana = new Especialista(pais = argentina, conocimientos = [programacionBasica,instalacionLinux,objetos,disenioConObjetos],commitsRealizados = 200)
+	const susana = new Especialista(pais = colombia, conocimientos = [programacionBasica,objetos],commitsRealizados = 1500)
+
+	test "Juana pude participar de la cumbre"{
+		assert.that(juana.puedeParticiparEnLaCumbre())
+	}
+	
+	test "lucia pude participar de la cumbre"{
+		assert.notThat(lucia.puedeParticiparEnLaCumbre())
+	}
+	
+	test "mariana pude participar de la cumbre"{
+		assert.that(mariana.puedeParticiparEnLaCumbre())
+	}
+	
+	test "susana pude participar de la cumbre"{
+		assert.notThat(susana.puedeParticiparEnLaCumbre())
+	}
+	
+	test "lucia no cumple con los requisitos para entrar a la cumbre"{
+		assert.notThat(lucia.cumpleConLosRequisitosDeAccesoALaCumbre())
+	}
+}
